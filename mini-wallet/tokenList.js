@@ -4,23 +4,33 @@ export default list = {
   tokens: [
     {
       chainId: 1,
-      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      symbol: "USDC",
-      name: "USD Coin",
-      decimals: 6,
+      address: "0x7E970ce4dAD319453e8852C3aDFE84c6Fa3E8d09",
+      symbol: "DEG",
+      name: "Degen Gas",
+      decimals: 18,
       logoURI:
         "https://bafybeiekvvr4iu4bqxm6de5tzxa3yfwqptmsg3ixpjr4edk5rkp3ddadaq.ipfs.dweb.link/",
-      tags: ["stablecoin"],
+      tags: ["degengas"],
     },
     {
       chainId: 1,
-      address: "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
-      symbol: "cUSDC",
-      name: "Compound USD Coin",
-      decimals: 8,
+      address: "0x1769D9B9725C71EAF34Bc77b928E478C08792Bfc",
+      symbol: "PIGI",
+      name: "Piggy Gas",
+      decimals: 18,
       logoURI:
         "https://bafybeic2tvsrvsvyx4inv6svpnlunw7cncugllbnqmy3c5yugvcprsekju.ipfs.dweb.link/",
-      tags: ["compound"],
+      tags: ["pigi"],
+    },
+    {
+      chainId: 1,
+      address: "0x3CF0fEf0360AFB087e33AD6245E7A163204c52ad",
+      symbol: "MBJT",
+      name: "MBJ Gas",
+      decimals: 18,
+      logoURI:
+        "https://bafybeic2tvsrvsvyx4inv6svpnlunw7cncugllbnqmy3c5yugvcprsekju.ipfs.dweb.link/",
+      tags: ["mbjt"],
     },
   ],
 };
