@@ -1,5 +1,5 @@
 // https://github.com/Uniswap/token-lists/blob/main/test/schema/example.tokenlist.json
-export default list = {
+export default {
   name: "My Token List",
   tokens: [
     {

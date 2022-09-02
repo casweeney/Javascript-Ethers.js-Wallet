@@ -1,6 +1,9 @@
 import abi from "./abi.js";
 import openCity from "./tab.js";
+import list from "./tokenList.js";
 const { ethers: etherjs } = ethers;
+
+// console.log(list, abi, etherjs);
 
 const rpcUrl = "https://goerli.infura.io/v3/ba80361523fe423bb149026a490266f0";
 const signerProvider = new etherjs.providers.Web3Provider(window.ethereum);
@@ -42,8 +45,6 @@ const getUserWallet = async () => {
   //   console.log(connectedWallet, "connected wallet");
 };
 
-console.log(abi, etherjs);
-
 export default {
   openCity,
 };
@@ -58,6 +59,32 @@ button.addEventListener("click", connectWallet);
 function updateUserAddress(address) {
   userAddress.innerText = address;
 }
+
+async function getListTokenDetails(tokenAddress) {
+  await connectWallet();
+  let userAddress = await signer.getAddress();
+  const token = await useContract(tokenAddress, abi);
+
+  try {
+    const [name, symbol, totalSupply, userBalance] = await Promise.all([token.name(), token.symbol(), token.totalSupply(), token.balanceOf(userAddress)]);
+    console.log(name, symbol, totalSupply / 10 ** 18, userBalance / 10 ** 18);
+    return { name, symbol, totalSupply: Number(totalSupply), userBalance };
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function displayTokenList() {
+  list.tokens.map((token) => {
+    getListTokenDetails(token.address);
+  });
+}
+
+async function test(x) {
+  console.log(x);
+}
+
+displayTokenList();
 
 function tokenTemplateUpdate(name, symbol, totalSupply, userBalance) {
   return `
