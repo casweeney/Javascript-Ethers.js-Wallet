@@ -60,7 +60,7 @@ function updateUserAddress(address) {
   userAddress.innerText = address;
 }
 
-async function getListTokenDetails(tokenAddress) {
+async function getTokenListDetails(tokenAddress) {
   await connectWallet();
   let userAddress = await signer.getAddress();
   const token = await useContract(tokenAddress, abi);
@@ -68,6 +68,11 @@ async function getListTokenDetails(tokenAddress) {
   try {
     const [name, symbol, totalSupply, userBalance] = await Promise.all([token.name(), token.symbol(), token.totalSupply(), token.balanceOf(userAddress)]);
     console.log(name, symbol, totalSupply / 10 ** 18, userBalance / 10 ** 18);
+
+    const template = tokenTemplateUpdate(name, symbol, totalSupply / 10 ** 18, `${userBalance / 10 ** 18} ${symbol}`);
+
+    htmlToken.innerHTML += template;
+
     return { name, symbol, totalSupply: Number(totalSupply), userBalance };
   } catch (err) {
     console.log(err);
@@ -76,19 +81,15 @@ async function getListTokenDetails(tokenAddress) {
 
 async function displayTokenList() {
   list.tokens.map((token) => {
-    getListTokenDetails(token.address);
+    getTokenListDetails(token.address);
   });
-}
-
-async function test(x) {
-  console.log(x);
 }
 
 displayTokenList();
 
 function tokenTemplateUpdate(name, symbol, totalSupply, userBalance) {
   return `
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center mb-4">
         <div>
             <div class="flex items-center">
                 <div class="p-2 token-thumbnail w-10 h-10"> 
@@ -104,32 +105,6 @@ function tokenTemplateUpdate(name, symbol, totalSupply, userBalance) {
   `;
 }
 
-async function getTokenDetails() {
-  await connectWallet();
-  loader.innerText = "Loading...";
-  const token = await useContract(tokenAddress, abi);
-  let userAddress = await signer.getAddress();
-
-  try {
-    const [name, symbol, totalSupply, userBalance] = await Promise.all([token.name(), token.symbol(), token.totalSupply(), token.balanceOf(userAddress)]);
-    return { name, symbol, totalSupply: Number(totalSupply), userBalance };
-  } catch (error) {
-    errored.innerText = "Error Occurred!";
-    console.log("error occurred", error);
-  } finally {
-    loader.innerText = "";
-  }
-}
-
-async function InitData() {
-  const { name, symbol, totalSupply, userBalance } = await getTokenDetails();
-  const template = tokenTemplateUpdate(name, symbol, totalSupply / 10 ** 18, `${userBalance / 10 ** 18} ${symbol}`);
-  token.innerHTML = template;
-}
-
-InitData();
-
-// getTokenDetails();
 
 /***
  * @amt - Number
