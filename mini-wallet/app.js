@@ -62,6 +62,7 @@ function updateUserAddress(address) {
 
 async function getTokenListDetails(tokenAddress) {
   await connectWallet();
+  loader.innerText = "Loading...";
   let userAddress = await signer.getAddress();
   const token = await useContract(tokenAddress, abi);
 
@@ -74,8 +75,11 @@ async function getTokenListDetails(tokenAddress) {
     htmlToken.innerHTML += template;
 
     return { name, symbol, totalSupply: Number(totalSupply), userBalance };
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    errored.innerText = "Error Occurred!";
+    console.log("error occurred", error);
+  } finally {
+    loader.innerText = "";
   }
 }
 
@@ -104,7 +108,6 @@ function tokenTemplateUpdate(name, symbol, totalSupply, userBalance) {
     </div>
   `;
 }
-
 
 /***
  * @amt - Number
