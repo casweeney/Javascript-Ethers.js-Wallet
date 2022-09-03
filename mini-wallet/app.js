@@ -12,7 +12,7 @@ const provider = new etherjs.providers.JsonRpcProvider(rpcUrl);
 
 const signer = signerProvider.getSigner();
 
-const tokenAddress = "0xC770d227Eb937D7D3A327e68180772571C24525F";
+const tokenAddress = list.tokens[0].address;
 
 let connectedWallet;
 
@@ -83,13 +83,14 @@ async function getTokenListDetails(tokenAddress, image) {
   }
 }
 
+///////// Starting Point of code execution ////////////
 async function displayTokenList() {
   list.tokens.map((token) => {
     getTokenListDetails(token.address, token.logoURI);
   });
 }
-
 displayTokenList();
+///////////////////////////////////////////////////////
 
 let currentTokenData = {
   name: list.tokens[0].name,
