@@ -40,16 +40,20 @@
           
           <div id="Paris" class="tabcontent">
             <div class="max-w-xs mx-auto">
-     
-            <div class="my-3">
-              <label class="mr-3">Amount: </label>
-              <input id="amt" name="amt" class="border border-blue-300 px-6 py-1" />
-            </div>
-            <div class="my-3">
-              <label class="mr-3">Receiver: </label>
-              <input id="receiver" name="amt" class="border border-blue-300 px-6 py-1" />
-            </div>
-            <button  id="sendTransaction" class="border border-blue-300 px-4 py-2 w-full mt-3">Send</button>
+              <div class="flex space-x-5">
+                <h4 class="font-bold text-md">Active Asset:</h4>
+                <p id="activeName"></p>
+                <p id="activeSymbol"></p>
+              </div>
+              <div class="my-3">
+                <label class="mr-3">Amount: </label>
+                <input id="amt" name="amt" class="border border-blue-300 px-6 py-1" />
+              </div>
+              <div class="my-3">
+                <label class="mr-3">Receiver: </label>
+                <input id="receiver" name="amt" class="border border-blue-300 px-6 py-1" />
+              </div>
+              <button  id="sendTransaction" class="border border-blue-300 px-4 py-2 w-full mt-3">Send</button>
           </div>
         </div>
     </div>

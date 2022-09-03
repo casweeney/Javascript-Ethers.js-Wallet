@@ -9,7 +9,7 @@ export default {
       name: "Degen Gas",
       decimals: 18,
       logoURI:
-        "https://bafybeiekvvr4iu4bqxm6de5tzxa3yfwqptmsg3ixpjr4edk5rkp3ddadaq.ipfs.dweb.link/",
+        "https://etherscan.io/token/images/wakandainu_32.png",
       tags: ["degengas"],
     },
     {
@@ -19,7 +19,7 @@ export default {
       name: "Piggy Gas",
       decimals: 18,
       logoURI:
-        "https://bafybeic2tvsrvsvyx4inv6svpnlunw7cncugllbnqmy3c5yugvcprsekju.ipfs.dweb.link/",
+        "https://etherscan.io/token/images/uniswap_32.png",
       tags: ["pigi"],
     },
     {
@@ -29,7 +29,7 @@ export default {
       name: "MBJ Gas",
       decimals: 18,
       logoURI:
-        "https://bafybeic2tvsrvsvyx4inv6svpnlunw7cncugllbnqmy3c5yugvcprsekju.ipfs.dweb.link/",
+        "https://etherscan.io/token/images/yvcurve-aave_32.png",
       tags: ["mbjt"],
     },
   ],

@@ -60,7 +60,7 @@ function updateUserAddress(address) {
   userAddress.innerText = address;
 }
 
-async function getTokenListDetails(tokenAddress) {
+async function getTokenListDetails(tokenAddress, image) {
   await connectWallet();
   loader.innerText = "Loading...";
   let userAddress = await signer.getAddress();
@@ -70,11 +70,11 @@ async function getTokenListDetails(tokenAddress) {
     const [name, symbol, totalSupply, userBalance] = await Promise.all([token.name(), token.symbol(), token.totalSupply(), token.balanceOf(userAddress)]);
     console.log(name, symbol, totalSupply / 10 ** 18, userBalance / 10 ** 18);
 
-    const template = tokenTemplateUpdate(name, symbol, totalSupply / 10 ** 18, `${userBalance / 10 ** 18} ${symbol}`);
+    const template = tokenTemplateUpdate(name, symbol, totalSupply / 10 ** 18, `${userBalance / 10 ** 18} ${symbol}`, image, tokenAddress);
 
     htmlToken.innerHTML += template;
 
-    return { name, symbol, totalSupply: Number(totalSupply), userBalance };
+    //return { name, symbol, totalSupply: Number(totalSupply), userBalance };
   } catch (error) {
     errored.innerText = "Error Occurred!";
     console.log("error occurred", error);
@@ -85,19 +85,41 @@ async function getTokenListDetails(tokenAddress) {
 
 async function displayTokenList() {
   list.tokens.map((token) => {
-    getTokenListDetails(token.address);
+    getTokenListDetails(token.address, token.logoURI);
   });
 }
 
 displayTokenList();
 
-function tokenTemplateUpdate(name, symbol, totalSupply, userBalance) {
+let currentTokenData = {
+  name: list.tokens[0].name,
+  symbol: list.tokens[0].symbol,
+  address: list.tokens[0].address
+};
+activeName.innerText = currentTokenData.name;
+activeSymbol.innerText = currentTokenData.symbol;
+
+function getAddress(tAddress, tName, tSymbol) {
+  currentTokenData.name = tName;
+  currentTokenData.symbol = tSymbol;
+  currentTokenData.address = tAddress;
+  console.log(currentTokenData);
+
+  activeName.innerText = currentTokenData.name;
+  activeSymbol.innerText = currentTokenData.symbol;
+
+  openCity(event, 'Paris');
+}
+
+
+
+function tokenTemplateUpdate(name, symbol, totalSupply, userBalance, image, tokenAddress) {
   return `
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex justify-between items-center mb-4" onclick="getAddress('${tokenAddress}', '${name}', '${symbol}')">
         <div>
             <div class="flex items-center">
                 <div class="p-2 token-thumbnail w-10 h-10"> 
-                    <img src="https://bafybeiekvvr4iu4bqxm6de5tzxa3yfwqptmsg3ixpjr4edk5rkp3ddadaq.ipfs.dweb.link/" alt="token-img" />  </div>
+                    <img src="${image}" alt="token-img" />  </div>
                 <div>
                     <p class="font-semibold">${name} - ${symbol} </p>
                     <p>Total Supply: ${totalSupply}</p>
@@ -114,7 +136,7 @@ function tokenTemplateUpdate(name, symbol, totalSupply, userBalance) {
  * @receiver - string
  **/
  async function sendToken(address, amt) {
-  const contract = useContract(tokenAddress, abi, true);
+  const contract = useContract(currentTokenData.address, abi, true);
   // console.log(contract);
   // const amount = new etherjs.utils.parseEthers();
   const decimal = await getDecimals();
@@ -141,3 +163,5 @@ sendTransaction.addEventListener("click", async () => {
 
   await sendToken(receiver.value, amt.value);
 });
+
+window.getAddress = getAddress;
